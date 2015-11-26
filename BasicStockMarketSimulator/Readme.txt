@@ -1,6 +1,6 @@
-﻿Requirement of assignment 1 is as follow:
+Virtual Stock Trading System
 
-The system must use real-time pricing via Yahoo finance API and will support USD currency only. The system has two features:
+The system uses real-time pricing via Yahoo finance API and will support USD currency only. The system has two features:
 
 1. Buying stocks
       Request
