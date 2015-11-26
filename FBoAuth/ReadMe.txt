@@ -1,3 +1,3 @@
 FBoAuth
 
-The implementation of three step oAuth authentication protocol in GO using Facebook oAuth.
+A simple Mithirl.js application that uses oAuth authentication protocol for login to application.
