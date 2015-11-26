@@ -1,0 +1,10 @@
+
+(in Windows)
+
+For Buying stocks:
+go run client.go localhost:1234 buy "{\"stockSymbolAndPercentage\":\"GOOG:50%,YHOO:50%\",\"budget\":10000.00}
+
+For getting the portfolio using transaction ID:
+go run client.go localhost:1234 checkPortfolio 1984304448
+
+

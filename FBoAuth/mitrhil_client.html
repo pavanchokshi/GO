@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mithril/0.2.0/mithril.min.js"></script>
+<body>
+<div id="example"></div>
+<script>
+var Request1 = {
+	data: m.prop(false),
+	url: "http://localhost:8080/locations/5636cce3789742235642a077",
+	click: function(){
+		m.request({method: "GET", url: Request1.url}).then(Request1.data);
+	},
+	view: function(){
+		return [
+			m("h3", "The Fellowship of the Ring"),
+			this.data() ? m("p", this.data().coordinate.lat+" "+this.data().coordinate.lng) : 
+			m("button", {onclick: Request1.click}, "Load Fellowship")
+		]
+	}
+}
+
+var Boromir = {
+	txt: m.prop(),
+	data: m.prop(false),
+	loading: false,
+	url: "http://localhost:8080/locations",
+	yell: function(){ 
+		var me = Boromir;
+		if(!me.txt()){alert("Enter ID");}
+		else
+		{
+			m.request({method: "GET", url: me.url+"/"+me.txt()}).then(me.data);
+			me.loading=true;
+		}
+	},
+	yellPost: function(){ 
+		var xhrConfig = function(xhr) {
+			xhr.setRequestHeader("Origin", "localhost");
+    		xhr.setRequestHeader("Access-Control-Request-Headers", "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept");
+		}
+		var me = Boromir;
+		if(!me.txt()){alert("Enter ID"+me.url);}
+		else
+		//{m.request({dataType: "jsonp", method: "POST", url: me.url, data:me.txt(), config: xhrConfig}).then(function(response) {
+		{m.request({method: "POST", url: me.url, data:me.txt(), config: xhrConfig}).then(function(response) {
+        console.log(response)})}
+		 
+	},
+	good: function(mydata){
+		var me = Boromir;
+		me.data(mydata);
+		me.loading = false;
+		m.redraw();
+	},
+	view: function(){
+		return [
+			m("h3", "Assignment3"),
+			m("input[type=text][size=40]", {onchange: m.withAttr("value", this.txt)}),
+			this.loading ? m("button", "Loading data...") :
+			  m("button", {onclick: this.yellPost.bind(this)}, "GET location details"),
+			!this.data()?"":
+			m("table",
+				m("tr",
+					[m("td","Name"),m("td",this.data().name)]
+				),
+				m("tr",
+					[m("td","Address"),m("td",this.data().address)]
+				),
+				m("tr",
+					[m("td","City"),m("td",this.data().city)]
+				)
+			)
+		];
+	}
+}
+m.module(document.getElementById("example"), Boromir);
+</script>
+</body>
+</html>
